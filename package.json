@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc-watch --noClear --onsuccess \"node dist/server/server.js\"",
+    "server": "node dist/server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^22.10.5",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "koa": "^2.15.3",
+    "koa-json": "^2.0.2",
+    "koa-router": "^13.0.1"
+  }
+}
