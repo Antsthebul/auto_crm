@@ -26,5 +26,7 @@ export class CustomerRespository extends BaseRespository{
         })
     }
 
-    // deleteCustomerVehicle(customerId: number, vehicleId:number): Promise<void>
+    deleteCustomerVehicle(customerId: number, vehicleId:number): void{
+        CustomerVehicle.destroy({where: {customerId, id:vehicleId}})
+    }
 }
