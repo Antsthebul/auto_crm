@@ -1,7 +1,7 @@
 import { Sequelize} from "sequelize";
 import { intializeModels } from ".";
 
-export class BaseRespository{
+export class BaseRepository{
     
     sequelize
 

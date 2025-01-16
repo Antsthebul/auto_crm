@@ -1,7 +1,7 @@
-import { BaseRespository } from "../../database/base_repository";
+import { BaseRepository } from "../../database/base_repository";
 import { Customer, CustomerVehicle } from "./customer_model";
 
-export class CustomerRespository extends BaseRespository{
+export class CustomerRespository extends BaseRepository{
     
     getCustomerById(id:number): Promise<Customer|null>{
         return Customer.findByPk(id, {nest:true})

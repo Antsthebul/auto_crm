@@ -1,21 +1,15 @@
-import { Model, CreationOptional, ForeignKey, InferAttributes,
-    InferCreationAttributes
- } from "sequelize";
+import { BaseRepository } from "../../database/base_repository"
+import { Job, RepairOrder } from "./repiar_order_model";
 
-import { Customer } from "../customer/customer_model";
+export class RepairOrderRepository extends BaseRepository{
+    create_repair_order(data:RepairOrder){
+        RepairOrder.create(data)
 
+    }
 
-export class RepairOrder extends Model<InferAttributes<RepairOrder>, InferCreationAttributes<RepairOrder>>{
-    declare id: CreationOptional<number>;
-    declare createdAt: Date
-    declare updatedAt: CreationOptional<Date>
-    declare completedAt: CreationOptional<Date>
-    declare personId: ForeignKey<Customer["id"]>
+    add_job_to_repair_order(repairOrderId:number, description:string){
+        Job.create({repairOrderId, description})
+    }
 }
 
-export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>>{
-    declare id: CreationOptional<number>
-    declare description: string
-    declare repairOrderId: ForeignKey<RepairOrder["id"]>
 
-}
