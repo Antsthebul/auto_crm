@@ -5,7 +5,7 @@ import { Customer, CustomerVehicle } from "../domain/customer/customer_model";
 
 const primaryKey = {
     id: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     }
@@ -40,7 +40,8 @@ export const intializeModels = (sequelize: Sequelize) => {
         ...primaryKey,
         description: { type: DataTypes.STRING, allowNull: false, },
         
-    }, { sequelize })
+    }, { sequelize }),
+    defineRelationships()
 }
 
 

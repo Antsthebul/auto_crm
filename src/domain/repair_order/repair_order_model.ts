@@ -9,12 +9,11 @@ export class RepairOrder extends Model<InferAttributes<RepairOrder>, InferCreati
     declare createdAt: Date
     declare updatedAt: CreationOptional<Date>
     declare completedAt: CreationOptional<Date>
-    declare personId: ForeignKey<Customer["id"]>
+    declare customerId: ForeignKey<Customer["id"]>
 }
 
 export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>>{
     declare id: CreationOptional<number>
     declare description: string
     declare repairOrderId: ForeignKey<RepairOrder["id"]>
-
 }

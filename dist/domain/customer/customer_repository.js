@@ -10,8 +10,13 @@ class CustomerRespository extends base_repository_1.BaseRepository {
     getCustomerVehicle(customerId, vehicleId) {
         return customer_model_1.CustomerVehicle.findOne({ where: { id: vehicleId, customerId } });
     }
-    createCustomer(data) {
-        return customer_model_1.Customer.create({ createdAt: new Date(), name: data.name, address: data.address });
+    async createCustomer(data) {
+        try {
+            return await customer_model_1.Customer.create({ createdAt: new Date(), name: data.name, address: data.address });
+        }
+        catch (err) {
+            throw new Error(`failed at life err: ${err}`);
+        }
     }
     createCustomerVehicle(id, data) {
         return customer_model_1.CustomerVehicle.create({

@@ -4,11 +4,14 @@ exports.RepairOrderRepository = void 0;
 const base_repository_1 = require("../../database/base_repository");
 const repair_order_model_1 = require("./repair_order_model");
 class RepairOrderRepository extends base_repository_1.BaseRepository {
-    create_repair_order(data) {
-        repair_order_model_1.RepairOrder.create(data);
+    async create_repair_order(customerId) {
+        return repair_order_model_1.RepairOrder.create({
+            customerId,
+            createdAt: new Date()
+        });
     }
-    add_job_to_repair_order(repairOrderId, description) {
-        repair_order_model_1.Job.create({ repairOrderId, description });
+    async add_job_to_repair_order(repairOrderId, description) {
+        await repair_order_model_1.Job.create({ repairOrderId, description });
     }
 }
 exports.RepairOrderRepository = RepairOrderRepository;

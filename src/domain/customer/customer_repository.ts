@@ -11,8 +11,13 @@ export class CustomerRespository extends BaseRepository{
         return CustomerVehicle.findOne({where:{id:vehicleId, customerId}})
     }
 
-    createCustomer(data:Customer):Promise<Customer>{
-        return Customer.create({createdAt: new Date(), name:data.name, address:data.address})
+    async createCustomer(data:Customer):Promise<Customer>{
+        try{
+
+            return await Customer.create({createdAt: new Date(), name:data.name, address:data.address})
+        }catch(err){
+            throw new Error(`failed at life err: ${err}`)
+        }
     }
     createCustomerVehicle(id:number, data:CustomerVehicle): Promise<CustomerVehicle>{
         return CustomerVehicle.create({

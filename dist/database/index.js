@@ -6,7 +6,7 @@ const repair_order_model_1 = require("../domain/repair_order/repair_order_model"
 const customer_model_1 = require("../domain/customer/customer_model");
 const primaryKey = {
     id: {
-        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     }
@@ -36,7 +36,8 @@ const intializeModels = (sequelize) => {
     repair_order_model_1.Job.init({
         ...primaryKey,
         description: { type: sequelize_1.DataTypes.STRING, allowNull: false, },
-    }, { sequelize });
+    }, { sequelize }),
+        (0, exports.defineRelationships)();
 };
 exports.intializeModels = intializeModels;
 const defineRelationships = () => {

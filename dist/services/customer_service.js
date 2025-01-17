@@ -7,7 +7,20 @@ class CustomerService {
         this.customerRepo = customerRepo;
     }
     async createCustomer(data) {
-        return await this.customerRepo.createCustomer(data);
+        try {
+            return await this.customerRepo.createCustomer(data);
+        }
+        catch (err) {
+            console.log("U sucks ", err);
+            throw new Error(`you fucking suck ${err}`);
+        }
+    }
+    async getCustomer(customerId) {
+        let customer = await this.customerRepo.getCustomerById(customerId);
+        if (!customer) {
+            throw new Error("Customer with not found");
+        }
+        return customer;
     }
 }
 exports.CustomerService = CustomerService;
