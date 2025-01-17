@@ -11,13 +11,13 @@ class BaseRepository {
         let host = process.env.DB_HOST;
         let dbName = process.env.DB_NAME;
         let port = process.env.DB_PORT;
-        console.log("wtff ", process.env.ENVIRONMENT === "test", "<>", typeof process.env.ENVIRONMENT);
-        if (process.env.ENVIRONMENT === "test") {
-            dbName += "_test:5433";
+        if (process.env.ENVIRONMENT?.trim() === "test") {
+            dbName = process.env.TEST_DB;
         }
         this.sequelize = new sequelize_1.Sequelize(`postgres://${user}:${password}@${host}:${port}/${dbName}`);
-        console.log(` Connecting to: postgres://${user}:${password}@${host}:${port}/${dbName}`);
+        this.sequelize.sync({ force: true });
         (0, _1.intializeModels)(this.sequelize);
     }
 }
 exports.BaseRepository = BaseRepository;
+//# sourceMappingURL=base_repository.js.map

@@ -48,3 +48,4 @@ const defineRelationships = () => {
     repair_order_model_1.RepairOrder.hasMany(repair_order_model_1.Job);
 };
 exports.defineRelationships = defineRelationships;
+//# sourceMappingURL=index.js.map

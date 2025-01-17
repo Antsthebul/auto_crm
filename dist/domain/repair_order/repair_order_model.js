@@ -8,3 +8,4 @@ exports.RepairOrder = RepairOrder;
 class Job extends sequelize_1.Model {
 }
 exports.Job = Job;
+//# sourceMappingURL=repair_order_model.js.map

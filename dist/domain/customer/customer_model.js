@@ -8,3 +8,4 @@ exports.Customer = Customer;
 class CustomerVehicle extends sequelize_1.Model {
 }
 exports.CustomerVehicle = CustomerVehicle;
+//# sourceMappingURL=customer_model.js.map

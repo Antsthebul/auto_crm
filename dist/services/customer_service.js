@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CustomerService = void 0;
 class CustomerService {
     customerRepo;
     constructor(customerRepo) {
@@ -9,4 +10,5 @@ class CustomerService {
         return await this.customerRepo.createCustomer(data);
     }
 }
-exports.default = CustomerService;
+exports.CustomerService = CustomerService;
+//# sourceMappingURL=customer_service.js.map

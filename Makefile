@@ -1,7 +1,7 @@
 test:
 	docker compose --profile test up -d
-	npm test
-	stop
+	-npm test
+	$(MAKE) stop
 
 stop: 
 	docker compose stop

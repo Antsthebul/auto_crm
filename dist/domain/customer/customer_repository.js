@@ -29,3 +29,4 @@ class CustomerRespository extends base_repository_1.BaseRepository {
     }
 }
 exports.CustomerRespository = CustomerRespository;
+//# sourceMappingURL=customer_repository.js.map

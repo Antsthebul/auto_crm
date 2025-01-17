@@ -1,8 +1,8 @@
-import assert from "assert"
 import { describe, it } from "node:test"
-import CustomerService from "./customer_service"
+import assert from "assert"
 import { CustomerRespository } from "../domain/customer/customer_repository"
 import { Customer } from "../domain/customer/customer_model"
+import { CustomerService } from "./customer_service.js";
 
 describe("customer service int tests",  ()=>{
 
@@ -15,8 +15,8 @@ describe("customer service int tests",  ()=>{
             address:"32 Wallaby Sydney"
         }) 
         await customerService.createCustomer(mock_data)
-        assert(null)
+        assert("done " === null)
     })
 
-    it()
+    // it()
 })

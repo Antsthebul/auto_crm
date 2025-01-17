@@ -3,7 +3,7 @@ import { intializeModels } from ".";
 
 export class BaseRepository{
     
-    sequelize
+    sequelize: Sequelize
 
     constructor(){
         let user = process.env.DB_USER
@@ -11,12 +11,11 @@ export class BaseRepository{
         let host = process.env.DB_HOST
         let dbName = process.env.DB_NAME
         let port = process.env.DB_PORT
-        console.log("wtff ", process.env.ENVIRONMENT === "test", "<>", typeof process.env.ENVIRONMENT)
-        if (process.env.ENVIRONMENT === "test"){
-            dbName += "_test:5433"
+        if (process.env.ENVIRONMENT?.trim() === "test"){
+            dbName = process.env.TEST_DB
         }
         this.sequelize = new Sequelize(`postgres://${user}:${password}@${host}:${port}/${dbName}`)
-        console.log(` Connecting to: postgres://${user}:${password}@${host}:${port}/${dbName}`)
+        this.sequelize.sync({force:true})
         intializeModels(this.sequelize)
     }
     

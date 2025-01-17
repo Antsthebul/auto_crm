@@ -1,7 +1,7 @@
 import { Customer } from "../domain/customer/customer_model";
 import { CustomerRespository } from "../domain/customer/customer_repository";
 
-export default class CustomerService{
+export class CustomerService{
 
     constructor(public customerRepo: CustomerRespository){}
 

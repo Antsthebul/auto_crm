@@ -12,3 +12,4 @@ class RepairOrderRepository extends base_repository_1.BaseRepository {
     }
 }
 exports.RepairOrderRepository = RepairOrderRepository;
+//# sourceMappingURL=repair_order_repository.js.map
