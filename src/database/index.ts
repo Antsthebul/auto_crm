@@ -1,5 +1,5 @@
 import { DataTypes, Sequelize } from "sequelize";
-import { RepairOrder, Job } from "../domain/repair_order/repair_order_repository";
+import { RepairOrder, Job } from "../domain/repair_order/repair_order_model";
 import { Customer, CustomerVehicle } from "../domain/customer/customer_model";
 
 

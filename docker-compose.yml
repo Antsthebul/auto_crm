@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+    - POSTGRES_USER=auto_crm
+    - POSTGRES_DB=auto_crm_local
+    - POSTGRES_PASSWORD=auto_crm
+    - POSTGRES_HOST_AUTH_MEHTOD=trust
+    volumes:
+    - ./pg_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./pg_data/data:/var/lib/postgresql/data
+    ports:
+    - 5432:5432
+    profiles:
+      - live
+  
+  test-db:
+    image: postgres:16-alpine
+    environment:
+    - POSTGRES_USER=auto_crm
+    - POSTGRES_DB=auto_crm_test
+    - POSTGRES_PASSWORD=auto_crm
+    - POSTGRES_HOST_AUTH_MEHTOD=trust
+    volumes:
+    - ./pg_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./pg_data/test_data:/var/lib/postgresql/data
+    ports:
+    - 5433:5432
+    profiles:
+      - test

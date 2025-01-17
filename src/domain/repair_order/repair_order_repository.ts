@@ -1,5 +1,5 @@
 import { BaseRepository } from "../../database/base_repository"
-import { Job, RepairOrder } from "./repiar_order_model";
+import { Job, RepairOrder } from "./repair_order_model";
 
 export class RepairOrderRepository extends BaseRepository{
     create_repair_order(data:RepairOrder){
