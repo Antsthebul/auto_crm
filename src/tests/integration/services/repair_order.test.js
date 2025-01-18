@@ -8,11 +8,8 @@ import { CustomerRespository } from "../../../domain/customer/customer_repositor
 import { Customer } from "../../../domain/customer/customer_model";
 
 describe("repair order int tests", async ()=>{
-    const customerService = new CustomerService(new CustomerRespository())
 
-    const db_conn = customerService.customerRepo.sequelize
-    await db_conn.query('DELETE FROM "RepairOrders"')
-    await db_conn.query('DELETE FROM "Customers"')
+    const customerService = new CustomerService(new CustomerRespository())
 
     let mockCustomer = await customerService
                 .createCustomer(new Customer({
@@ -28,18 +25,22 @@ describe("repair order int tests", async ()=>{
         customerId:mockCustomer.id,
         createdAt: new Date(),
         updatedAt: new Date()
-
     })
 
-    let job = new Job({
+    let job = Job.build({
         description:"TestJob1"
     })
 
     it("repair order is created and retrieve successfully", async ()=>{
-        const repairOrder = await repairOrderService.create_repair_order(repairOrderData, [job])
+        // ACT
+        const repairOrder = await repairOrderService.createRepairOrder(repairOrderData, [job])
+        
+        
         assert(repairOrder)
 
-
+        let jobs = await Job.findAll({repairOrderId:repairOrder.id})
+  
+        assert.equal(jobs.length, 1)
     })
 
 })

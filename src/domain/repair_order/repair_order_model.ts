@@ -9,11 +9,17 @@ export class RepairOrder extends Model<InferAttributes<RepairOrder>, InferCreati
     declare createdAt: Date
     declare updatedAt: CreationOptional<Date>
     declare completedAt: CreationOptional<Date>
-    declare customerId: ForeignKey<Customer["id"]>
+    declare customerId: ForeignKey<Customer["id"]>;
 }
 
 export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>>{
     declare id: CreationOptional<number>
     declare description: string
     declare repairOrderId: ForeignKey<RepairOrder["id"]>
+    declare createdAt: CreationOptional<Date>
+    declare updatedAt: CreationOptional<Date>
+}
+
+export class RepairOrderWithJobs extends Model<RepairOrder, InferAttributes<RepairOrderWithJobs>>{
+    declare jobs: Job[]
 }

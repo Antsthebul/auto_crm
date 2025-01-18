@@ -1,19 +1,23 @@
-import { Job, RepairOrder } from "../domain/repair_order/repair_order_model";
+import { Job, RepairOrder, RepairOrderWithJobs } from "../domain/repair_order/repair_order_model";
 import { RepairOrderRepository } from "../domain/repair_order/repair_order_repository";
 
 export class RepairOrderService{
     constructor(public repair_order_repo:RepairOrderRepository){}
 
-    async create_repair_order(customerId:number, jobs:Job[]): Promise<RepairOrder>{
-        const ro =  await this.repair_order_repo.create_repair_order(customerId)
+    async createRepairOrder(customerId:number, jobs:Job[]): Promise<RepairOrder>{
+        const ro =  await this.repair_order_repo.createRepairOrder(customerId)
         
-        jobs = jobs.map(job=>{
+        for( const job of jobs ){
             job.repairOrderId |= ro.id
-            return job
-        })
-
-        // await Job.bulkCreate(jobs)
+            
+            await job.save()
+        }
 
         return ro
+    }
+
+    async getRepairOrder(repairOrderId:number): Promise<RepairOrderWithJobs>{
+        return await this.repair_order_repo.getRepairOrderById(repairOrderId)
+     
     }
 }

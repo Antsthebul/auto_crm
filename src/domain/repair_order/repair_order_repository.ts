@@ -1,18 +1,25 @@
 import { BaseRepository } from "../../database/base_repository"
-import { Job, RepairOrder } from "./repair_order_model";
+import { Job, RepairOrder, RepairOrderWithJobs } from "./repair_order_model";
 
 export class RepairOrderRepository extends BaseRepository{
     
-    async create_repair_order(customerId:number): Promise<RepairOrder>{
-        return RepairOrder.create({
+    async createRepairOrder(customerId:number): Promise<RepairOrder>{
+        return await RepairOrder.create({
             customerId,
             createdAt: new Date()
         })
 
     }
 
-    async add_job_to_repair_order(repairOrderId:number, description:string){
-        await Job.create({repairOrderId, description})
+    async addJobToRepairOrder(repairOrderId:number, description:string){
+        await Job.create({repairOrderId, description, createdAt:new Date()})
+    }
+
+    async getRepairOrderById(repairOrderId:number): Promise<RepairOrderWithJobs>{
+        let ro = await RepairOrder.findByPk(repairOrderId)
+
+        let jobs = await Job.findAll({where:{repairOrderId}})
+        return RepairOrderWithJobs.build({...ro, jobs:jobs})
     }
 }
 

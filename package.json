@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc-watch --noClear --onsuccess \"node dist/server/server.js\"",
     "server": "node dist/server/server.js",
-    "test": "set ENVIRONMENT=test && tsc-watch --noClear --onsuccess \"node -r dotenv/config --test dist/**/*.test.js\""
+    "test": "tsc && node -r dotenv/config dist/commands/migrate.js dotenv_config_path=.env.test && node -r dotenv/config --test dist/**/*.test.js  dotenv_config_path=.env.test"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,5 @@
 test:
-	docker compose --profile test up -d
-	-npm test
-	$(MAKE) stop
+	powershell -ExecutionPolicy Bypass -File ./test.ps1
 
 stop: 
 	docker compose stop

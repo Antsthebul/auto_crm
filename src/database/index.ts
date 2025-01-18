@@ -14,8 +14,11 @@ const primaryKey = {
 export const intializeModels = (sequelize: Sequelize) => {
     Customer.init({
         ...primaryKey,
-        createdAt: {type: DataTypes.DATE, allowNull: false },
-        updatedAt: {type: DataTypes.DATE},
+        createdAt: {type: DataTypes.DATE, 
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW },
+        updatedAt: {type: DataTypes.DATE, 
+                    defaultValue: DataTypes.NOW},
         name: { type: DataTypes.STRING, allowNull: false },
         address: {type: DataTypes.STRING, allowNull: false }
     }, { sequelize });
@@ -31,14 +34,17 @@ export const intializeModels = (sequelize: Sequelize) => {
 
     RepairOrder.init({
         ...primaryKey,
-        createdAt: {type: DataTypes.DATE, allowNull: false,},
-        updatedAt: {type: DataTypes.DATE, allowNull: false,},
+        createdAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
+        updatedAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
         completedAt: {type: DataTypes.DATE},
     }, { sequelize });
 
     Job.init({
         ...primaryKey,
-        description: { type: DataTypes.STRING, allowNull: false, },
+        description: { type: DataTypes.STRING, allowNull: false },
+        createdAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
+        updatedAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
+
         
     }, { sequelize }),
     defineRelationships()

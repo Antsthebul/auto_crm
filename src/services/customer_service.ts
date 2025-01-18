@@ -10,8 +10,7 @@ export class CustomerService{
 
             return await this.customerRepo.createCustomer(data)
         }catch(err){
-            console.log("U sucks ", err)
-            throw new Error(`you fucking suck ${err}`)
+            throw new Error("customer service failed to create customer. ", {cause: err})
         }
     }
 

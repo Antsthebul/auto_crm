@@ -14,8 +14,11 @@ const primaryKey = {
 const intializeModels = (sequelize) => {
     customer_model_1.Customer.init({
         ...primaryKey,
-        createdAt: { type: sequelize_1.DataTypes.DATE, allowNull: false },
-        updatedAt: { type: sequelize_1.DataTypes.DATE },
+        createdAt: { type: sequelize_1.DataTypes.DATE,
+            allowNull: false,
+            defaultValue: sequelize_1.DataTypes.NOW },
+        updatedAt: { type: sequelize_1.DataTypes.DATE,
+            defaultValue: sequelize_1.DataTypes.NOW },
         name: { type: sequelize_1.DataTypes.STRING, allowNull: false },
         address: { type: sequelize_1.DataTypes.STRING, allowNull: false }
     }, { sequelize });
@@ -29,13 +32,15 @@ const intializeModels = (sequelize) => {
     }, { sequelize });
     repair_order_model_1.RepairOrder.init({
         ...primaryKey,
-        createdAt: { type: sequelize_1.DataTypes.DATE, allowNull: false, },
-        updatedAt: { type: sequelize_1.DataTypes.DATE, allowNull: false, },
+        createdAt: { type: sequelize_1.DataTypes.DATE, allowNull: false, defaultValue: sequelize_1.DataTypes.NOW, },
+        updatedAt: { type: sequelize_1.DataTypes.DATE, allowNull: false, defaultValue: sequelize_1.DataTypes.NOW, },
         completedAt: { type: sequelize_1.DataTypes.DATE },
     }, { sequelize });
     repair_order_model_1.Job.init({
         ...primaryKey,
-        description: { type: sequelize_1.DataTypes.STRING, allowNull: false, },
+        description: { type: sequelize_1.DataTypes.STRING, allowNull: false },
+        createdAt: { type: sequelize_1.DataTypes.DATE, allowNull: false, defaultValue: sequelize_1.DataTypes.NOW, },
+        updatedAt: { type: sequelize_1.DataTypes.DATE, allowNull: false, defaultValue: sequelize_1.DataTypes.NOW, },
     }, { sequelize }),
         (0, exports.defineRelationships)();
 };

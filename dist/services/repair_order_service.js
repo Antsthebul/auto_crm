@@ -6,13 +6,12 @@ class RepairOrderService {
     constructor(repair_order_repo) {
         this.repair_order_repo = repair_order_repo;
     }
-    async create_repair_order(customerId, jobs) {
-        const ro = await this.repair_order_repo.create_repair_order(customerId);
-        jobs = jobs.map(job => {
+    async createRepairOrder(customerId, jobs) {
+        const ro = await this.repair_order_repo.createRepairOrder(customerId);
+        for (const job of jobs) {
             job.repairOrderId |= ro.id;
-            return job;
-        });
-        // await Job.bulkCreate(jobs)
+            await job.save();
+        }
         return ro;
     }
 }
