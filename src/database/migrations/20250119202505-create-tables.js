@@ -1,0 +1,60 @@
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    const primaryKey = {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        }
+        
+    }
+
+    await queryInterface.createTable('Customers', {
+      ...primaryKey,
+      createdAt: {type: Sequelize.DATE, 
+                          allowNull: false,
+                          defaultValue: Sequelize.NOW },
+      updatedAt: {type: Sequelize.DATE, 
+                          defaultValue: Sequelize.NOW},
+              name: { type: Sequelize.STRING, allowNull: false },
+              address: {type: Sequelize.STRING, allowNull: false }
+    });
+
+    await queryInterface.createTable('CustomerVehicles', {
+      ...primaryKey,
+      year: { type: Sequelize.STRING, allowNull: false },
+      make:  { type: Sequelize.STRING, allowNull: false },
+      model:  { type: Sequelize.STRING, allowNull: false },
+      trim:  { type: Sequelize.STRING, allowNull: false },
+      plate:   { type: Sequelize.STRING, allowNull: false },
+    })
+    
+    await queryInterface.createTable('RepairOrders', {
+      ...primaryKey,
+      createdAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
+      updatedAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
+      completedAt: {type: Sequelize.DATE},
+    })
+
+    await queryInterface.createTable('Jobs', {
+      ...primaryKey,
+      description: { type: Sequelize.STRING, allowNull: false },
+      createdAt: {type: Sequelize.DATE, allowNull: false,defaultValue: Sequelize.NOW,},
+      updatedAt: {type: Sequelize.DATE, allowNull: false,defaultValue: Sequelize.NOW,},
+      repairOrderId:{type: Sequelize.INTEGER, references:{model:{tableName:"RepairOrders", }, key:"id"}},
+      completedAt: {type: Sequelize.DATE},
+    })
+
+
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('Customers')
+    await queryInterface.dropTable('CustomerVehicles')
+    await queryInterface.dropTable('RepairOrders')
+    await queryInterface.dropTable('Jobs')
+  }
+};

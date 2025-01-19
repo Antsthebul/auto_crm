@@ -1,14 +1,13 @@
-import { describe, it } from "node:test"
-import assert from "assert"
 import { CustomerRespository } from "../../../domain/customer/customer_repository"
-import { Customer } from "../../../domain/customer/customer_model"
-import { CustomerService } from "../../../services/customer_service.js";
+import { Customer } from "../../../database/models/customer_model"
+import { CustomerService } from "../../../services/customer_service";
+import assert from "assert";
+import { describe, it } from "node:test"
 
-describe("customer service int tests", async()=>{
+describe("customer service int tests", ()=>{
 
     const customerService = new CustomerService(new CustomerRespository())
-    
-    await customerService.customerRepo.sequelize.query('DELETE from "Customers"')
+        
     it("create and retrieve customer successfully", async ()=>{
         // ARRANGE
         let mock_data = Customer.build({
@@ -23,6 +22,7 @@ describe("customer service int tests", async()=>{
         
         // ASSERT
         assert(cus)
+        
 
     })
 

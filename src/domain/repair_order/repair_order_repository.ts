@@ -1,13 +1,19 @@
 import { BaseRepository } from "../../database/base_repository"
-import { Job, RepairOrder, RepairOrderWithJobs } from "./repair_order_model";
+import { RepairOrder, Job } from "../../database/models/repair_order_model"
+import { JobSchema, RepairOrderCreateSchema, RepairOrderSchema } from "./repair_order_schema"
 
 export class RepairOrderRepository extends BaseRepository{
     
-    async createRepairOrder(customerId:number): Promise<RepairOrder>{
-        return await RepairOrder.create({
-            customerId,
+    async createRepairOrder(data:RepairOrderCreateSchema): Promise<number>{
+        
+        let ro = await RepairOrder.create({
+            customerId:data.customerId,
             createdAt: new Date()
         })
+
+        await Job.bulkCreate(data.jobs.map(j=>({description:j.description, repairOrderId:ro.id})))
+
+        return  ro.id 
 
     }
 
@@ -15,11 +21,24 @@ export class RepairOrderRepository extends BaseRepository{
         await Job.create({repairOrderId, description, createdAt:new Date()})
     }
 
-    async getRepairOrderById(repairOrderId:number): Promise<RepairOrderWithJobs>{
+    async getRepairOrderById(repairOrderId:number): Promise<RepairOrderSchema>{
         let ro = await RepairOrder.findByPk(repairOrderId)
-
+        if (!ro){
+            throw new Error("repair order not found")
+        }
         let jobs = await Job.findAll({where:{repairOrderId}})
-        return RepairOrderWithJobs.build({...ro, jobs:jobs})
+        return {id:ro.id, 
+                updatedAt:ro.updatedAt, 
+                completedAt: ro.completedAt,
+                customerId:ro.customerId,
+                createdAt:ro.createdAt,
+                jobs:jobs.map(j=>(
+                    {description:j.description,
+                     id:(j.id as number) , 
+                     createdAt:j.createdAt, 
+                     completedAt: j.completedAt,
+                    updatedAt:j.updatedAt
+                }))}
     }
 }
 

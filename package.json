@@ -4,29 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc-watch --noClear --onsuccess \"node dist/server/server.js\"",
+    "start": "tsc-watch --noClear --onsuccess \"dotenvx run -- node dist/server/server.js\"",
     "server": "node dist/server/server.js",
-    "test": "tsc && node -r dotenv/config dist/commands/migrate.js dotenv_config_path=.env.test && node -r dotenv/config --test dist/**/*.test.js  dotenv_config_path=.env.test"
+    "test": "tsc && dotenvx run -f .env.test run -- node dist/commands/migrate.js  && dotenvx run -f .env.test  -- node --test dist/**/*.test.js",
+    "migrate": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate && docker compose down",
+    "make-migration": "docker compose --profile live up -d && dotenvx run   -- npx sequelize-cli migration:generate --name %npm_config_name%  && docker compose down",
+    "downgrade": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate:undo && docker compose down"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
-    "@types/jest": "^29.5.14",
+    "@types/koa-json": "^2.0.23",
     "@types/koa-router": "^7.4.8",
     "@types/node": "^22.10.5",
-    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "@dotenvx/dotenvx": "^1.33.0",
     "koa": "^2.15.3",
+    "koa-body": "^6.0.1",
     "koa-json": "^2.0.2",
     "koa-router": "^13.0.1",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2"
   }
 }

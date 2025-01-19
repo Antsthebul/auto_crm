@@ -1,7 +1,8 @@
 import { Model, CreationOptional, ForeignKey, InferAttributes,
     InferCreationAttributes
  } from "sequelize";
- import { Customer } from "../customer/customer_model";
+
+ import { Customer } from "./customer_model";
 
 
 export class RepairOrder extends Model<InferAttributes<RepairOrder>, InferCreationAttributes<RepairOrder>>{
@@ -18,8 +19,8 @@ export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job
     declare repairOrderId: ForeignKey<RepairOrder["id"]>
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
+    declare completedAt: CreationOptional<Date>
+
+
 }
 
-export class RepairOrderWithJobs extends Model<RepairOrder, InferAttributes<RepairOrderWithJobs>>{
-    declare jobs: Job[]
-}

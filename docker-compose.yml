@@ -1,5 +1,6 @@
 services:
   db:
+    container_name: auto_crm_db
     image: postgres:16-alpine
     environment:
     - POSTGRES_USER=auto_crm
@@ -10,6 +11,10 @@ services:
     - ./pg_data/data:/var/lib/postgresql/data
     ports:
     - 5432:5432
+    healthcheck:
+      test: docker exec backend-test-db-1  bash -c 'psql -U auto_crm -d auto_crm_local -c "SELECT ''hi'';"'  
+      interval: 1s
+      timeout: 5s
     profiles:
       - live
   
@@ -24,5 +29,9 @@ services:
     - ./pg_data/test_data:/var/lib/postgresql/data
     ports:
     - 5433:5432
+    healthcheck:
+      test: docker exec backend-test-db-1  bash -c 'psql -U auto_crm -d auto_crm_test -c "SELECT ''hi'';"'  
+      interval: 1s
+      timeout: 5s
     profiles:
       - test

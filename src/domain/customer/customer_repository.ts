@@ -1,5 +1,5 @@
 import { BaseRepository } from "../../database/base_repository";
-import { Customer, CustomerVehicle } from "./customer_model";
+import { Customer, CustomerVehicle } from "../../database/models/customer_model";
 
 export class CustomerRespository extends BaseRepository{
     

@@ -1,4 +1,4 @@
-import { Customer } from "../domain/customer/customer_model";
+import { Customer } from "../database/models/customer_model";
 import { CustomerRespository } from "../domain/customer/customer_repository";
 
 export class CustomerService{

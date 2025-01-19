@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize";
-import { RepairOrder, Job } from "../domain/repair_order/repair_order_model";
-import { Customer, CustomerVehicle } from "../domain/customer/customer_model";
+import { RepairOrder, Job } from "./models/repair_order_model";
+import { Customer, CustomerVehicle } from "./models/customer_model";
 
 
 const primaryKey = {
@@ -44,7 +44,8 @@ export const intializeModels = (sequelize: Sequelize) => {
         description: { type: DataTypes.STRING, allowNull: false },
         createdAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
         updatedAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
-
+        repairOrderId:{type: DataTypes.INTEGER, references:{model:RepairOrder, key:"id"}},
+        completedAt: {type: DataTypes.DATE},
         
     }, { sequelize }),
     defineRelationships()
