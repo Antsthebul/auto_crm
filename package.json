@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc-watch --noClear --onsuccess \"dotenvx run -- node dist/server/server.js\"",
-    "server": "node dist/server/server.js",
+    "start": "docker compose --profile live up -d && tsc-watch --noClear --onsuccess \"dotenvx run -- node dist/server/server.js\"",
+    "server": "dotenvx run -- node dist/server/server.js",
     "test": "tsc && dotenvx run -f .env.test run -- node dist/commands/migrate.js  && dotenvx run -f .env.test  -- node --test dist/**/*.test.js",
     "migrate": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate && docker compose down",
     "make-migration": "docker compose --profile live up -d && dotenvx run   -- npx sequelize-cli migration:generate --name %npm_config_name%  && docker compose down",

@@ -2,3 +2,4 @@ node_modules
 
 pg_data
 .env*
+dist/

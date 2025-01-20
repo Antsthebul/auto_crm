@@ -1,5 +1,4 @@
 import { CustomerRespository } from "../../../domain/customer/customer_repository"
-import { Customer } from "../../../database/models/customer_model"
 import { CustomerService } from "../../../services/customer_service";
 import assert from "assert";
 import { describe, it } from "node:test"
@@ -10,21 +9,16 @@ describe("customer service int tests", ()=>{
         
     it("create and retrieve customer successfully", async ()=>{
         // ARRANGE
-        let mock_data = Customer.build({
+        let mock_customer = {
             name: "Test1",
             address:"32 Wallaby Sydney",
-            createdAt: new Date()
-        }) 
+        }
 
         // ACT
-        let db_customer = await customerService.createCustomer(mock_data)
-        let cus = await customerService.getCustomer(db_customer.id)
+        let db_customer_id = await customerService.createCustomer(mock_customer)
+        let cus = await customerService.getCustomer(db_customer_id)
         
         // ASSERT
         assert(cus)
-        
-
     })
-
-    // it()
 })

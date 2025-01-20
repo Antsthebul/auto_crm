@@ -9,13 +9,13 @@ router.post("/createRepairOrder", async (ctx:AppContext, next)=>{
     const repairOrderService = ctx.repairOrderService 
     const data = ctx.request.body
     const id = await repairOrderService.createRepairOrder(data)
-    return {"id":id}
+    ctx.response.body = {"id":id}
 })
 
 router.get("/repairOrder/:id", async (ctx, next)=>{
     const repairOrderService = ctx.repairOrderService
     const { id } = ctx.params
     const ro = await repairOrderService.getRepairOrder(Number(id))
-    return ro
+    ctx.response.body = ro
 
 })

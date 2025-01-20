@@ -5,10 +5,11 @@ import koaBody from "koa-body";
 import { RepairOrderRepository } from "../domain/repair_order/repair_order_repository";
 import { RepairOrderService } from "../services/repair_order_service";
 import { router as repair_order_router } from "./routes/repair_order_router";
+import { router as customer_router} from "./routes/customer_router"
 import { CustomerService } from "../services/customer_service";
 import { CustomerRespository } from "../domain/customer/customer_repository";
-const app = new Koa()
 
+const app = new Koa()
 const router = new Router();
 
 const SERVICE_DEPENDENCIES = {
@@ -25,8 +26,8 @@ const SERVICE_DEPENDENCIES = {
     }
 })(app.context)
 
-router.get('/', (ctx, next)=>{
-    console.log("Teamer")
+router.get('/health', (ctx, next)=>{
+    ctx.response.body = {message:"ok"}
 })
 
 app
@@ -35,5 +36,6 @@ app
     .use(router.routes())
     .use(router.allowedMethods())
     .use(repair_order_router.routes())
+    .use(customer_router.routes())
 
 app.listen(3000)
