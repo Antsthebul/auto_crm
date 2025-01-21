@@ -1,5 +1,5 @@
 import { DataTypes, Sequelize } from "sequelize";
-import { RepairOrder, Job } from "./models/repair_order_model";
+import { Ticket, Job } from "./models/ticket";
 import { Customer, CustomerVehicle } from "./models/customer_model";
 
 
@@ -32,11 +32,12 @@ export const intializeModels = (sequelize: Sequelize) => {
         plate:   { type: DataTypes.STRING, allowNull: false },
     }, { sequelize  })
 
-    RepairOrder.init({
+    Ticket.init({
         ...primaryKey,
         createdAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
         updatedAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
         completedAt: {type: DataTypes.DATE},
+        state:{type: DataTypes.ENUM, values:["appointment", "repair order"]}
     }, { sequelize });
 
     Job.init({
@@ -44,7 +45,7 @@ export const intializeModels = (sequelize: Sequelize) => {
         description: { type: DataTypes.STRING, allowNull: false },
         createdAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
         updatedAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
-        repairOrderId:{type: DataTypes.INTEGER, references:{model:RepairOrder, key:"id"}},
+        repairOrderId:{type: DataTypes.INTEGER, references:{model:Ticket, key:"id"}},
         completedAt: {type: DataTypes.DATE},
         
     }, { sequelize }),
@@ -56,9 +57,9 @@ export const defineRelationships = () => {
     CustomerVehicle.belongsTo(Customer)
     Customer.hasMany(CustomerVehicle)
 
-    RepairOrder.belongsTo(Customer)
-    Customer.hasMany(RepairOrder)
+    Ticket.belongsTo(Customer)
+    Customer.hasMany(Ticket)
 
-    Job.belongsTo(RepairOrder)
-    RepairOrder.hasMany(Job)
+    Job.belongsTo(Ticket)
+    Ticket.hasMany(Job)
 }

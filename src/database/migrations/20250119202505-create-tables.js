@@ -11,6 +11,8 @@ module.exports = {
         }
         
     }
+    await queryInterface.sequelize.query(
+      "CREATE TYPE ticket_state AS ENUM ('repairorder', 'appointment')")
 
     await queryInterface.createTable('Customers', {
       ...primaryKey,
@@ -32,11 +34,13 @@ module.exports = {
       plate:   { type: Sequelize.STRING, allowNull: false },
     })
     
-    await queryInterface.createTable('RepairOrders', {
+    await queryInterface.createTable('Tickets', {
       ...primaryKey,
       createdAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       updatedAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       completedAt: {type: Sequelize.DATE},
+      state:{type: DataTypes.ENUM, values:["appointment", "repair order"]}
+      
     })
 
     await queryInterface.createTable('Jobs', {
@@ -44,7 +48,7 @@ module.exports = {
       description: { type: Sequelize.STRING, allowNull: false },
       createdAt: {type: Sequelize.DATE, allowNull: false,defaultValue: Sequelize.NOW,},
       updatedAt: {type: Sequelize.DATE, allowNull: false,defaultValue: Sequelize.NOW,},
-      repairOrderId:{type: Sequelize.INTEGER, references:{model:{tableName:"RepairOrders", }, key:"id"}},
+      repairOrderId:{type: Sequelize.INTEGER, references:{model:{tableName:"Tickets", }, key:"id"}},
       completedAt: {type: Sequelize.DATE},
     })
 
@@ -54,7 +58,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('Customers')
     await queryInterface.dropTable('CustomerVehicles')
-    await queryInterface.dropTable('RepairOrders')
+    await queryInterface.dropTable('Tickets')
     await queryInterface.dropTable('Jobs')
   }
 };

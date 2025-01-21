@@ -6,7 +6,7 @@
   "scripts": {
     "start": "docker compose --profile live up -d && tsc-watch --noClear --onsuccess \"dotenvx run -- node dist/server/server.js\"",
     "server": "dotenvx run -- node dist/server/server.js",
-    "test": "tsc && dotenvx run -f .env.test run -- node dist/commands/migrate.js  && dotenvx run -f .env.test  -- node --test dist/**/*.test.js",
+    "test": "docker compose --profile test up -d && tsc && dotenvx run -f .env.test run -- node dist/commands/migrate.js  && dotenvx run -f .env.test  -- node --test dist/**/*.test.js",
     "migrate": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate && docker compose down",
     "make-migration": "docker compose --profile live up -d && dotenvx run   -- npx sequelize-cli migration:generate --name %npm_config_name%  && docker compose down",
     "downgrade": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate:undo && docker compose down"
@@ -25,10 +25,13 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.33.0",
+    "http-proxy-middleware": "^3.0.3",
     "koa": "^2.15.3",
     "koa-body": "^6.0.1",
+    "koa-connect": "^2.1.0",
     "koa-json": "^2.0.2",
     "koa-router": "^13.0.1",
+    "koa-static": "^5.0.0",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",

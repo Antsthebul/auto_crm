@@ -1,9 +1,9 @@
 import { DefaultContext } from "koa";
-import { RepairOrderService } from "./services/repair_order_service";
+import { TicketService } from "./services/ticket_service";
 import { CustomerService } from "./services/customer_service";
 
 export interface AppContext extends DefaultContext{
-    repairOrderService: RepairOrderService
+    repairOrderService: TicketService
     customerService:CustomerService
 
 }

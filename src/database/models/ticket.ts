@@ -5,18 +5,19 @@ import { Model, CreationOptional, ForeignKey, InferAttributes,
  import { Customer } from "./customer_model";
 
 
-export class RepairOrder extends Model<InferAttributes<RepairOrder>, InferCreationAttributes<RepairOrder>>{
+export class Ticket extends Model<InferAttributes<Ticket>, InferCreationAttributes<Ticket>>{
     declare id: CreationOptional<number>;
     declare createdAt: Date
     declare updatedAt: CreationOptional<Date>
     declare completedAt: CreationOptional<Date>
-    declare customerId: ForeignKey<Customer["id"]>;
+    declare customerId: ForeignKey<Customer["id"]>
+    declare state: string
 }
 
 export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>>{
     declare id: CreationOptional<number>
     declare description: string
-    declare repairOrderId: ForeignKey<RepairOrder["id"]>
+    declare repairOrderId: ForeignKey<Ticket["id"]>
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
     declare completedAt: CreationOptional<Date>

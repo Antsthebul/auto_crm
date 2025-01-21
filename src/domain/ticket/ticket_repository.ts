@@ -1,14 +1,15 @@
 import { BaseRepository } from "../../database/base_repository"
-import { RepairOrder, Job } from "../../database/models/repair_order_model"
-import { JobSchema, RepairOrderCreateSchema, RepairOrderSchema } from "./repair_order_schema"
+import { Ticket, Job } from "../../database/models/ticket"
+import { JobSchema, TicketCreateSchema, TicketSchema } from "./ticket_schema"
 
-export class RepairOrderRepository extends BaseRepository{
+export class TicketRepository extends BaseRepository{
     
-    async createRepairOrder(data:RepairOrderCreateSchema): Promise<number>{
+    async createRepairOrder(data:TicketCreateSchema): Promise<number>{
         
-        let ro = await RepairOrder.create({
+        let ro = await Ticket.create({
             customerId:data.customerId,
-            createdAt: new Date()
+            createdAt: new Date(),
+            state: data.state
         })
 
         await Job.bulkCreate(data.jobs.map(j=>({description:j.description, repairOrderId:ro.id})))
@@ -21,8 +22,8 @@ export class RepairOrderRepository extends BaseRepository{
         await Job.create({repairOrderId, description, createdAt:new Date()})
     }
 
-    async getRepairOrderById(repairOrderId:number): Promise<RepairOrderSchema>{
-        let ro = await RepairOrder.findByPk(repairOrderId)
+    async getRepairOrderById(repairOrderId:number): Promise<TicketSchema>{
+        let ro = await Ticket.findByPk(repairOrderId)
         if (!ro){
             throw new Error("repair order not found")
         }
@@ -32,6 +33,7 @@ export class RepairOrderRepository extends BaseRepository{
                 completedAt: ro.completedAt,
                 customerId:ro.customerId,
                 createdAt:ro.createdAt,
+                state:ro.state,
                 jobs:jobs.map(j=>(
                     {description:j.description,
                      id:(j.id as number) , 

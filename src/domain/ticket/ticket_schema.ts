@@ -4,16 +4,17 @@ interface BaseSchema{
     completedAt?: Date
 }
 
-interface BaseRepairOrder extends BaseSchema{
+interface BaseTicket extends BaseSchema{
     customerId:number
-    jobs:JobSchema[]
+    jobs:JobSchema[],
+    state:string
 }
 
-export interface RepairOrderSchema extends BaseRepairOrder{
+export interface TicketSchema extends BaseTicket{
     id:number
 }
 
-export interface RepairOrderCreateSchema extends BaseRepairOrder{}
+export interface TicketCreateSchema extends BaseTicket{}
 
 export interface BaseJobSchema extends BaseSchema{
     description:string
