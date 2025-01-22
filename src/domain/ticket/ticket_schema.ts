@@ -2,6 +2,7 @@ interface BaseSchema{
     createdAt: Date
     updatedAt: Date
     completedAt?: Date
+    scheduledAt?: Date
 }
 
 interface BaseTicket extends BaseSchema{

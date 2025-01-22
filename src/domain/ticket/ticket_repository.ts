@@ -1,10 +1,10 @@
 import { BaseRepository } from "../../database/base_repository"
 import { Ticket, Job } from "../../database/models/ticket"
-import { JobSchema, TicketCreateSchema, TicketSchema } from "./ticket_schema"
+import { TicketCreateSchema, TicketSchema } from "./ticket_schema"
 
 export class TicketRepository extends BaseRepository{
     
-    async createRepairOrder(data:TicketCreateSchema): Promise<number>{
+    async createTicket(data:TicketCreateSchema): Promise<number>{
         
         let ro = await Ticket.create({
             customerId:data.customerId,

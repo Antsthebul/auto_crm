@@ -20,7 +20,9 @@ export const intializeModels = (sequelize: Sequelize) => {
         updatedAt: {type: DataTypes.DATE, 
                     defaultValue: DataTypes.NOW},
         name: { type: DataTypes.STRING, allowNull: false },
-        address: {type: DataTypes.STRING, allowNull: false }
+        address: {type: DataTypes.STRING, allowNull: false },
+        phone: {type: DataTypes.STRING, allowNull:false},
+        email: {type: DataTypes.STRING}
     }, { sequelize });
 
     CustomerVehicle.init({
@@ -37,6 +39,7 @@ export const intializeModels = (sequelize: Sequelize) => {
         createdAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
         updatedAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
         completedAt: {type: DataTypes.DATE},
+        scheduledAt: {type: DataTypes.DATE, defaultValue: DataTypes.NOW,},
         state:{type: DataTypes.ENUM, values:["appointment", "repair order"]}
     }, { sequelize });
 

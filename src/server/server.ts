@@ -4,7 +4,7 @@ import json from "koa-json";
 import koaBody from "koa-body";
 import { TicketRepository } from "../domain/ticket/ticket_repository";
 import { TicketService } from "../services/ticket_service";
-import { router as repair_order_router } from "./routes/repair_order_router";
+import { router as repair_order_router } from "./routes/ticket_router";
 import { router as customer_router} from "./routes/customer_router"
 import { CustomerService } from "../services/customer_service";
 import { CustomerRespository } from "../domain/customer/customer_repository";

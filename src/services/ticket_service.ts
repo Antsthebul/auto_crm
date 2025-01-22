@@ -5,7 +5,7 @@ export class TicketService{
     constructor(public repair_order_repo:TicketRepository){}
 
     async createTicket(data: TicketCreateSchema): Promise<number>{
-        const repair_order_id =  await this.repair_order_repo.createRepairOrder(data)
+        const repair_order_id =  await this.repair_order_repo.createTicket(data)
 
         return repair_order_id
     }

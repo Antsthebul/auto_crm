@@ -8,6 +8,9 @@ import { Model, CreationOptional, ForeignKey, InferAttributes,
     declare updatedAt: CreationOptional<Date>
     declare name: string
     declare address: string
+    declare phone: string
+    declare email: CreationOptional<string>
+
  }
 
  export class CustomerVehicle extends Model<InferAttributes<CustomerVehicle>, InferCreationAttributes<CustomerVehicle>>{

@@ -10,6 +10,7 @@ export class Ticket extends Model<InferAttributes<Ticket>, InferCreationAttribut
     declare createdAt: Date
     declare updatedAt: CreationOptional<Date>
     declare completedAt: CreationOptional<Date>
+    declare scheduledAt: CreationOptional<Date>
     declare customerId: ForeignKey<Customer["id"]>
     declare state: string
 }

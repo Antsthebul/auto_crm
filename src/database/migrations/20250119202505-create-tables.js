@@ -38,6 +38,7 @@ module.exports = {
       ...primaryKey,
       createdAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       updatedAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
+      scheduledAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       completedAt: {type: Sequelize.DATE},
       state:{type: DataTypes.ENUM, values:["appointment", "repair order"]}
       

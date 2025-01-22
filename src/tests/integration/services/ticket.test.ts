@@ -8,13 +8,14 @@ import assert from "assert";
 
 describe("repair order int tests", ()=>{
 
-    let repairOrderService = new TicketService(
+    let ticketService = new TicketService(
         new TicketRepository()
     )
     let mockCustomer = Customer.build({
                     name: "Customer A",
                     address:"Test Address",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    phone:"610-777-7777"
         })
 
 
@@ -29,7 +30,7 @@ describe("repair order int tests", ()=>{
         description:"TestJob1"
     })
 
-    it("repair order is created and retrieve successfully", async ()=>{
+    it("An appointment is created and retrieved successfully", async ()=>{
         // ARRANGE
         await mockCustomer.save()
 
@@ -41,11 +42,11 @@ describe("repair order int tests", ()=>{
             state:"appointment",
             jobs:[job]
         }
-        const repairOrderId = await repairOrderService.createTicket(testTicket)
+        const repairOrderId = await ticketService.createTicket(testTicket)
         // ASSERT - CREATE
         assert(repairOrderId)
 
-        let new_ro = await repairOrderService.getTicket(repairOrderId)
+        let new_ro = await ticketService.getTicket(repairOrderId)
   
         // ACT - RETRIEVE
         assert.equal(new_ro.jobs.length, 1)
