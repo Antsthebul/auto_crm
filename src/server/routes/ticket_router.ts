@@ -1,5 +1,5 @@
 import Router from "koa-router"
-import { AppContext } from "../../types"
+import { AppContext, TicketState } from "../../types"
 
 export const router = new Router<{}, AppContext>()
 
@@ -12,10 +12,23 @@ router.post("/createTicket", async (ctx:AppContext, next)=>{
     ctx.response.body = {"id":id}
 })
 
-router.get("/ticket/:id", async (ctx, next)=>{
+router.get("/tickets/:id", async (ctx, next)=>{
     const repairOrderService = ctx.repairOrderService
     const { id } = ctx.params
     const ro = await repairOrderService.getTicket(Number(id))
     ctx.response.body = ro
 
+})
+
+router.get("/tickets", async (ctx, next)=>{
+    const { type } = ctx.query
+    
+    if (!type || !["repairOrder", "appointment"].includes(type as string)){
+        ctx.response.body = {tickets:[]}
+    }else{
+        const repairOrderService = ctx.repairOrderService
+        const tickets = repairOrderService.getTickets(type as TicketState)
+
+
+    }
 })

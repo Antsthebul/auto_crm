@@ -12,7 +12,7 @@ module.exports = {
         
     }
     await queryInterface.sequelize.query(
-      "CREATE TYPE ticket_state AS ENUM ('repairorder', 'appointment')")
+      "CREATE TYPE ticket_state AS ENUM ('REPAIR_ORDER', 'APPOINTMENT')")
 
     await queryInterface.createTable('Customers', {
       ...primaryKey,
@@ -21,8 +21,10 @@ module.exports = {
                           defaultValue: Sequelize.NOW },
       updatedAt: {type: Sequelize.DATE, 
                           defaultValue: Sequelize.NOW},
-              name: { type: Sequelize.STRING, allowNull: false },
-              address: {type: Sequelize.STRING, allowNull: false }
+        name: { type: Sequelize.STRING, allowNull: false },
+        address: {type: Sequelize.STRING, allowNull: false },
+        phone:{type: Sequelize.STRING, allowNull: false },
+        email: {type: Sequelize.STRING },
     });
 
     await queryInterface.createTable('CustomerVehicles', {

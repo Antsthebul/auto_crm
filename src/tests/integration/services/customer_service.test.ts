@@ -12,6 +12,7 @@ describe("customer service int tests", ()=>{
         let mock_customer = {
             name: "Test1",
             address:"32 Wallaby Sydney",
+            phone:"777-777-7777"
         }
 
         // ACT

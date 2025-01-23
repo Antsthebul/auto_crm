@@ -1,9 +1,10 @@
 import { BaseRepository } from "../../database/base_repository"
 import { Ticket, Job } from "../../database/models/ticket"
+import { TicketState } from "../../types"
 import { TicketCreateSchema, TicketSchema } from "./ticket_schema"
 
 export class TicketRepository extends BaseRepository{
-    
+
     async createTicket(data:TicketCreateSchema): Promise<number>{
         
         let ro = await Ticket.create({
@@ -23,10 +24,11 @@ export class TicketRepository extends BaseRepository{
     }
 
     async getRepairOrderById(repairOrderId:number): Promise<TicketSchema>{
-        let ro = await Ticket.findByPk(repairOrderId)
+        let ro = await Ticket.findByPk(repairOrderId, {include:[{model:Job}]})
         if (!ro){
             throw new Error("repair order not found")
         }
+ 
         let jobs = await Job.findAll({where:{repairOrderId}})
         return {id:ro.id, 
                 updatedAt:ro.updatedAt, 
@@ -41,6 +43,14 @@ export class TicketRepository extends BaseRepository{
                      completedAt: j.completedAt,
                     updatedAt:j.updatedAt
                 }))}
+    }
+
+    async getTickets(type:TicketState, startDate?:Date, endDate?:Date){
+        return await Ticket.findAll({where:{state:type}})
+    }
+
+    private _convertRowToTicket(){
+
     }
 }
 

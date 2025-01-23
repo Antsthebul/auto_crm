@@ -7,3 +7,5 @@ export interface AppContext extends DefaultContext{
     customerService:CustomerService
 
 }
+
+export type TicketState = "REPAIR_ORDER"| "APPOINTMENT"

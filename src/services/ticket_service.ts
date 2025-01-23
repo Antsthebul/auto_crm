@@ -1,5 +1,6 @@
 import { TicketRepository } from "../domain/ticket/ticket_repository";
 import { TicketCreateSchema, TicketSchema } from "../domain/ticket/ticket_schema";
+import { TicketState } from "../types";
 
 export class TicketService{
     constructor(public repair_order_repo:TicketRepository){}
@@ -13,5 +14,9 @@ export class TicketService{
     async getTicket(repairOrderId:number): Promise<TicketSchema>{
         return await this.repair_order_repo.getRepairOrderById(repairOrderId)
      
+    }
+
+    async getTickets(type:TicketState, startDate?:Date, endDate?:Date ){
+        return await this.repair_order_repo.getTickets(type)
     }
 }

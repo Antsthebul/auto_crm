@@ -19,13 +19,15 @@ export class CustomerRespository extends BaseRepository{
             updatedAt:c.updatedAt,
             name:c.name,
             address:c.address,
+            phone:c.phone,
+            email:c.email
         }))
     }
 
     async createCustomer(data:CustomerCreateSchema):Promise<CustomerSchema>{
         try{
 
-            return await Customer.create({createdAt: new Date(), name:data.name, address:data.address})
+            return await Customer.create({createdAt: new Date(), name:data.name, address:data.address, phone:data.phone})
         }catch(err){
             throw new Error(`failed at life err: ${err}`)
         }
