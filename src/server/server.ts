@@ -12,6 +12,9 @@ import { AppContext } from "../types";
 
 const app = new Koa()
 const router = new Router<{}, AppContext>();
+const HOST = process.env.HOST || "127.0.0.1"
+const PORT = process.env.PORT || 3000
+
 
 const SERVICE_DEPENDENCIES = {
     "repairOrderService":new TicketService(new TicketRepository()),
@@ -44,4 +47,5 @@ app
     .use(router.routes())
     .use(router.allowedMethods())
 
-app.listen(3000)
+console.log(`Server running on ${HOST}:${PORT}`)
+app.listen(PORT)

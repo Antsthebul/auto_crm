@@ -13,14 +13,16 @@ export class TicketRepository extends BaseRepository{
             state: data.state
         })
 
-        await Job.bulkCreate(data.jobs.map(j=>({description:j.description, repairOrderId:ro.id})))
+        const NOW = new Date()
+        await Job.bulkCreate(data.jobs.map(j=>({description:j.description, repairOrderId:ro.id, createdAt:NOW, updatedAt:NOW})))
 
         return  ro.id 
 
     }
 
     async addJobToRepairOrder(repairOrderId:number, description:string){
-        await Job.create({repairOrderId, description, createdAt:new Date()})
+        let now = new Date()
+        await Job.create({repairOrderId, description, createdAt:now, updatedAt:now})
     }
 
     async getRepairOrderById(repairOrderId:number): Promise<TicketSchema>{
@@ -45,8 +47,15 @@ export class TicketRepository extends BaseRepository{
                 }))}
     }
 
-    async getTickets(type:TicketState, startDate?:Date, endDate?:Date){
-        return await Ticket.findAll({where:{state:type}})
+    async getTickets(type:TicketState, startDate?:Date, endDate?:Date): Promise<TicketSchema[]>{
+        let tickets = await Ticket.findAll({
+                include:[{
+                    model: Job,
+                    required:true
+                }],
+                where:{state:type}})
+        console.log("check the tix => ", tickets)
+        return []
     }
 
     private _convertRowToTicket(){

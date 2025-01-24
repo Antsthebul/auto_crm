@@ -16,7 +16,8 @@ export class TicketService{
      
     }
 
-    async getTickets(type:TicketState, startDate?:Date, endDate?:Date ){
-        return await this.repair_order_repo.getTickets(type)
+    async getTickets(type:TicketState, startDate?:Date, endDate?:Date ): Promise<TicketSchema[]>{
+        await this.repair_order_repo.getTickets(type)
+        return []
     }
 }

@@ -19,15 +19,18 @@ describe("repair order int tests", ()=>{
         })
 
 
-    let repairOrder = Ticket.build({
+    let ticket = Ticket.build({
         customerId:mockCustomer.id,
         createdAt: new Date(),
         updatedAt: new Date(),
         state:"appointment"
     })
 
+    const NOW = new Date()
     let job = Job.build({
-        description:"TestJob1"
+        description:"TestJob1",
+        updatedAt:NOW, 
+        createdAt:NOW
     })
 
     it("An appointment is created and retrieved successfully", async ()=>{
@@ -36,9 +39,9 @@ describe("repair order int tests", ()=>{
 
         // ACT - CREATE
         let testTicket = {
-            customerId: repairOrder.customerId,
-            createdAt: repairOrder.createdAt,
-            updatedAt: repairOrder.updatedAt,
+            customerId: ticket.customerId,
+            createdAt: ticket.createdAt,
+            updatedAt: ticket.updatedAt,
             state:"appointment",
             jobs:[job]
         }

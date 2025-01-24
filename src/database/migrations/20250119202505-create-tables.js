@@ -42,7 +42,7 @@ module.exports = {
       updatedAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       scheduledAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       completedAt: {type: Sequelize.DATE},
-      state:{type: DataTypes.ENUM, values:["appointment", "repair order"]}
+      state:{type: Sequelize.ENUM, values:["APPOINTMENT", "REPAIR_ORDER"]}
       
     })
 

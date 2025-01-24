@@ -19,8 +19,8 @@ export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job
     declare id: CreationOptional<number>
     declare description: string
     declare repairOrderId: ForeignKey<Ticket["id"]>
-    declare createdAt: CreationOptional<Date>
-    declare updatedAt: CreationOptional<Date>
+    declare createdAt: Date
+    declare updatedAt: Date
     declare completedAt: CreationOptional<Date>
 
 
