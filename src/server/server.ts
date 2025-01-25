@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 3000
 
 
 const SERVICE_DEPENDENCIES = {
-    "repairOrderService":new TicketService(new TicketRepository()),
-    "customerService":new CustomerService(new CustomerRespository())
+    ticketService:new TicketService(new TicketRepository()),
+    customerService:new CustomerService(new CustomerRespository())
 };
 
 

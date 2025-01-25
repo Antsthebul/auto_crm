@@ -10,7 +10,9 @@
     "migrate": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate && docker compose down",
     "make-migration": "docker compose --profile live up -d && dotenvx run   -- npx sequelize-cli migration:generate --name %npm_config_name%  && docker compose down",
     "downgrade": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate:undo && docker compose down",
-    "seed": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:seed:all && docker compose down"
+    "seed": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:seed:all && docker compose down",
+    "de-seed-all": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:seed:undo && docker compose down"
+
   },
   "keywords": [],
   "author": "",

@@ -1,3 +1,5 @@
+import { TicketState } from "../../types"
+
 interface BaseSchema{
     createdAt: Date
     updatedAt: Date
@@ -8,7 +10,7 @@ interface BaseSchema{
 interface BaseTicket extends BaseSchema{
     customerId:number
     jobs:JobSchema[],
-    state:string
+    state:TicketState
 }
 
 export interface TicketSchema extends BaseTicket{

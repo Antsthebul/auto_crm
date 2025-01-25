@@ -24,7 +24,8 @@ router.get("/tickets/:id", async (ctx, next)=>{
 router.get("/tickets", async (ctx, next)=>{
     const { type } = ctx.query
     let tickets:TicketSchema[] = [];
-    if (!type || !["REPAIR_ORDER", "APPOINTNMENT"].includes(type as string)){
+    if (!type || !["REPAIR_ORDER", "APPOINTMENT"].includes(type as string)){
+        console.log("not here puta")
         tickets = []
     }else{
         const ticketService = ctx.ticketService

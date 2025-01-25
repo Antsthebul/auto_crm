@@ -4,6 +4,7 @@ import { TicketRepository } from "../../../domain/ticket/ticket_repository";
 import { Job, Ticket } from "../../../database/models/ticket";
 import { Customer } from "../../../database/models/customer_model";
 import assert from "assert";
+import { TicketState } from "../../../types";
 
 
 describe("repair order int tests", ()=>{
@@ -23,14 +24,15 @@ describe("repair order int tests", ()=>{
         customerId:mockCustomer.id,
         createdAt: new Date(),
         updatedAt: new Date(),
-        state:"appointment"
+        state:"APPOINTMENT"
     })
 
     const NOW = new Date()
     let job = Job.build({
         description:"TestJob1",
         updatedAt:NOW, 
-        createdAt:NOW
+        createdAt:NOW,
+        ticketId:ticket.id
     })
 
     it("An appointment is created and retrieved successfully", async ()=>{
@@ -42,7 +44,7 @@ describe("repair order int tests", ()=>{
             customerId: ticket.customerId,
             createdAt: ticket.createdAt,
             updatedAt: ticket.updatedAt,
-            state:"appointment",
+            state:"APPOINTMENT" as TicketState,
             jobs:[job]
         }
         const repairOrderId = await ticketService.createTicket(testTicket)

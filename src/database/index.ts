@@ -40,7 +40,9 @@ export const intializeModels = (sequelize: Sequelize) => {
         updatedAt: {type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW,},
         completedAt: {type: DataTypes.DATE},
         scheduledAt: {type: DataTypes.DATE, defaultValue: DataTypes.NOW,},
-        state:{type: DataTypes.ENUM, values:["appointment", "repair order"]}
+        state:{type: DataTypes.ENUM, values:["APPOINTMENT", "REPAIR_ORDER"]},
+        customerId:{type: DataTypes.INTEGER, references:{model:Customer, key:"id"}},
+        
     }, { sequelize });
 
     Job.init({
@@ -48,21 +50,12 @@ export const intializeModels = (sequelize: Sequelize) => {
         description: { type: DataTypes.STRING, allowNull: false },
         createdAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
         updatedAt: {type: DataTypes.DATE, allowNull: false,defaultValue: DataTypes.NOW,},
-        repairOrderId:{type: DataTypes.INTEGER, references:{model:Ticket, key:"id"}},
         completedAt: {type: DataTypes.DATE},
         
-    }, { sequelize }),
-    defineRelationships()
-}
+    }, { sequelize });
+    
+    Ticket.hasMany(Job, {
+        foreignKey:"ticketId"
+    });
 
-
-export const defineRelationships = () => {
-    CustomerVehicle.belongsTo(Customer)
-    Customer.hasMany(CustomerVehicle)
-
-    Ticket.belongsTo(Customer)
-    Customer.hasMany(Ticket)
-
-    Job.belongsTo(Ticket)
-    Ticket.hasMany(Job)
 }

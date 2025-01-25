@@ -42,7 +42,8 @@ module.exports = {
       updatedAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       scheduledAt: {type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.NOW,},
       completedAt: {type: Sequelize.DATE},
-      state:{type: Sequelize.ENUM, values:["APPOINTMENT", "REPAIR_ORDER"]}
+      state:{type: Sequelize.ENUM, values:["APPOINTMENT", "REPAIR_ORDER"]},
+      customerId:{type: Sequelize.INTEGER, references:{model:{tableName:"Customers"}}}
       
     })
 
@@ -51,7 +52,7 @@ module.exports = {
       description: { type: Sequelize.STRING, allowNull: false },
       createdAt: {type: Sequelize.DATE, allowNull: false,defaultValue: Sequelize.NOW,},
       updatedAt: {type: Sequelize.DATE, allowNull: false,defaultValue: Sequelize.NOW,},
-      repairOrderId:{type: Sequelize.INTEGER, references:{model:{tableName:"Tickets", }, key:"id"}},
+      ticketId:{type: Sequelize.INTEGER, references:{model:{tableName:"Tickets", }, key:"id"}},
       completedAt: {type: Sequelize.DATE},
     })
 

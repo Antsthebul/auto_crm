@@ -1,8 +1,9 @@
 import { Model, CreationOptional, ForeignKey, InferAttributes,
-    InferCreationAttributes
+    InferCreationAttributes,
+    NonAttribute
  } from "sequelize";
 
- import { Customer } from "./customer_model";
+import { TicketState } from "../../types";
 
 
 export class Ticket extends Model<InferAttributes<Ticket>, InferCreationAttributes<Ticket>>{
@@ -11,18 +12,17 @@ export class Ticket extends Model<InferAttributes<Ticket>, InferCreationAttribut
     declare updatedAt: CreationOptional<Date>
     declare completedAt: CreationOptional<Date>
     declare scheduledAt: CreationOptional<Date>
-    declare customerId: ForeignKey<Customer["id"]>
-    declare state: string
+    declare customerId: ForeignKey<number>
+    declare state: TicketState
+    declare jobs: NonAttribute<Job[]>
 }
 
 export class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>>{
     declare id: CreationOptional<number>
     declare description: string
-    declare repairOrderId: ForeignKey<Ticket["id"]>
+    declare ticketId: ForeignKey<number>
     declare createdAt: Date
     declare updatedAt: Date
     declare completedAt: CreationOptional<Date>
-
-
 }
 

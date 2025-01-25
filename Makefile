@@ -5,4 +5,4 @@ migrate:
 	powershell -ExecutionPolicy Bypass -File ./migrate.ps1
 	
 stop: 
-	docker compose stop
+	docker compose --profile live --profile test stop
