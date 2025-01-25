@@ -3,21 +3,21 @@ import { TicketCreateSchema, TicketSchema } from "../domain/ticket/ticket_schema
 import { TicketState } from "../types";
 
 export class TicketService{
-    constructor(public repair_order_repo:TicketRepository){}
+    constructor(public repairOrderRepo:TicketRepository){}
 
     async createTicket(data: TicketCreateSchema): Promise<number>{
-        const repair_order_id =  await this.repair_order_repo.createTicket(data)
+        const repair_order_id =  await this.repairOrderRepo.createTicket(data)
 
         return repair_order_id
     }
 
     async getTicket(repairOrderId:number): Promise<TicketSchema>{
-        return await this.repair_order_repo.getRepairOrderById(repairOrderId)
+        return await this.repairOrderRepo.getRepairOrderById(repairOrderId)
      
     }
 
     async getTickets(type:TicketState, startDate?:Date, endDate?:Date ): Promise<TicketSchema[]>{
-        await this.repair_order_repo.getTickets(type)
-        return []
+        return await this.repairOrderRepo.getTickets(type)
+        
     }
 }

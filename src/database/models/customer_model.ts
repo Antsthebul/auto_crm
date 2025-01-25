@@ -20,5 +20,5 @@ import { Model, CreationOptional, ForeignKey, InferAttributes,
     declare model: string
     declare trim?: CreationOptional<string>
     declare plate?: CreationOptional<string>
-    declare customerId: ForeignKey<Customer["id"]>
+    declare customerId: ForeignKey<number>
 }

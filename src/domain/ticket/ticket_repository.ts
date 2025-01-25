@@ -2,6 +2,7 @@ import { BaseRepository } from "../../database/base_repository"
 import { Ticket, Job } from "../../database/models/ticket"
 import { TicketState } from "../../types"
 import { TicketCreateSchema, TicketSchema } from "./ticket_schema"
+import { FindOptions, InferAttributes, Op } from "sequelize"
 
 export class TicketRepository extends BaseRepository{
 
@@ -32,9 +33,24 @@ export class TicketRepository extends BaseRepository{
     }
 
     async getTickets(type:TicketState, startDate?:Date, endDate?:Date): Promise<TicketSchema[]>{
+        const filterArgs:{[k in keyof Partial<Ticket>]: any }= {state:type}
+
+        if (startDate){
+            console.log("wack")
+            filterArgs["createdAt"] = {[Op.gt]: startDate} 
+        }
+        if (endDate){
+            console.log("crack")
+            filterArgs["completedAt"] = {[Op.lt]: endDate} 
+
+        }
+    
         const tickets = await Ticket.findAll({
-            include: Job,
-            where:{state:type}})
+            include: {
+                model: Job,
+                as: "jobs"
+            },
+            where:filterArgs})
 
         return tickets.map(t=>this._convertRowToTicket(t))
     }
@@ -46,7 +62,7 @@ export class TicketRepository extends BaseRepository{
             customerId:ticket.customerId,
             createdAt:ticket.createdAt,
             state:ticket.state,
-            jobs:ticket.jobs.map(j=>(
+            jobs:ticket.jobs?.map(j=>(
                 {description:j.description,
                  id:(j.id as number) , 
                  createdAt:j.createdAt, 

@@ -14,7 +14,7 @@ function getConnection(): Sequelize{
 
     if (!conn){
         db_conn = new Sequelize(`postgres://${user}:${password}@${host}:${port}/${dbName}`,
-        //  {logging:false}
+         {logging:false}
         );
         intializeModels(db_conn)
     }else{

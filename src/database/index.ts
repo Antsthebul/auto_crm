@@ -55,7 +55,17 @@ export const intializeModels = (sequelize: Sequelize) => {
     }, { sequelize });
     
     Ticket.hasMany(Job, {
-        foreignKey:"ticketId"
+        foreignKey:"ticketId",
+        as:"jobs"
     });
+
+    Customer.hasMany(CustomerVehicle, {
+        foreignKey:"customerId",
+        as: "vehicles"
+    })
+    Customer.hasMany(Ticket, {
+        foreignKey:"customerId",
+        as:"tickets"
+    })
 
 }
