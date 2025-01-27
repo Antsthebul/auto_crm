@@ -1,6 +1,7 @@
 import Router from "koa-router"
 import { AppContext, TicketState } from "../../types"
 import { TicketSchema } from "../../domain/ticket/ticket_schema"
+import { getStatusFromText, setResponse, TextToStatus } from "."
 
 export const router = new Router<{}, AppContext>()
 
@@ -8,28 +9,30 @@ export const router = new Router<{}, AppContext>()
 
 router.post("/createTicket", async (ctx:AppContext, next)=>{
     const ticketService = ctx.ticketService 
-    const data = ctx.request.body
-    const id = await ticketService.createTicket(data)
-    ctx.response.body = {"id":id}
+    const reqBody = ctx.request.body
+    const [hasErr, details, data] = await ticketService.createTicket(reqBody)
+    
+    setResponse(ctx, {hasErr, details, data})
 })
 
 router.get("/tickets/:id", async (ctx, next)=>{
     const ticketService = ctx.ticketService
     const { id } = ctx.params
-    const ro = await ticketService.getTicket(Number(id))
-    ctx.response.body = ro
+    const [hasErr, details, data] = await ticketService.getTicket(Number(id))
+    setResponse(ctx, {hasErr, details, data})
 
 })
 
 router.get("/tickets", async (ctx, next)=>{
-    const { type } = ctx.query
-    let tickets:TicketSchema[] = [];
-    if (!type || !["REPAIR_ORDER", "APPOINTMENT"].includes(type as string)){
-        console.log("not here puta")
-        tickets = []
+    const { type:ticketType } = ctx.query
+
+    if (!ticketType || !["REPAIR_ORDER", "APPOINTMENT"].includes(ticketType as string)){
+        setResponse(ctx, {hasErr:true, details:"BAD_DATA", data:[]})
     }else{
         const ticketService = ctx.ticketService
-        tickets = await ticketService.getTickets(type as TicketState)
+        const [hasErr, details, data] = await ticketService.getTickets(ticketType as TicketState)
+        setResponse(ctx, {hasErr, details, data})
     }
-    ctx.response.body = {tickets}
+ 
+
 })

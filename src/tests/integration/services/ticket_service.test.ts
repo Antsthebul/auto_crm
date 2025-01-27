@@ -47,11 +47,14 @@ describe("repair order int tests", ()=>{
             state:"APPOINTMENT" as TicketState,
             jobs:[job]
         }
-        const repairOrderId = await ticketService.createTicket(testTicket)
+        const [hasErr, _, repairOrderId] = await ticketService.createTicket(testTicket)
+        
         // ASSERT - CREATE
-        assert(repairOrderId)
+        assert(!hasErr)
 
-        let new_ro = await ticketService.getTicket(repairOrderId)
+        const [getTikErr, tickDetails, new_ro]  = await ticketService.getTicket(repairOrderId)
+  
+        assert(!getTikErr)
   
         // ACT - RETRIEVE
         assert.equal(new_ro.jobs.length, 1)

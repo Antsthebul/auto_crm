@@ -1,28 +1,40 @@
 import { TicketState } from "../../types"
+import { z } from "zod"
 
-interface BaseSchema{
-    createdAt: Date
-    updatedAt: Date
-    completedAt?: Date
-    scheduledAt?: Date
-}
+const BaseSchema = z.object({
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    completedAt: z.optional(z.date()),
+    scheduledAt: z.optional(z.date())
+})
 
-interface BaseTicket extends BaseSchema{
-    customerId:number
-    jobs:JobSchema[],
-    state:TicketState
-}
+export const  BaseJobSchema =  BaseSchema.extend({
+    description: z.string()
+})
 
-export interface TicketSchema extends BaseTicket{
-    id:number
-}
+export const JobSchema = BaseJobSchema.extend({
+    id:z.number()
+})
 
-export interface TicketCreateSchema extends BaseTicket{}
+const BaseTicket  = BaseSchema.extend({
+    customerId:z.number(),
+    jobs:z.array(JobSchema),
+    state:TicketState    
+}) 
 
-export interface BaseJobSchema extends BaseSchema{
-    description:string
-}
-export interface CreateJobSchema extends BaseJobSchema{}
-export interface JobSchema extends BaseJobSchema{
-    id:number
-}
+
+
+
+export const TicketSchema = BaseTicket.extend({
+    id:z.number()
+})
+export type TicketSchema = z.infer<typeof TicketSchema>
+
+export const TicketCreateSchema = BaseTicket
+export type TicketCreateSchema = z.infer<typeof TicketCreateSchema>
+
+
+export const CreateJobSchema = BaseJobSchema
+
+
+

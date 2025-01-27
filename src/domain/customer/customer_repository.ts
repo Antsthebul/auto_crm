@@ -4,8 +4,13 @@ import { CustomerCreateSchema, CustomerSchema } from "./customer_schema";
 
 export class CustomerRespository extends BaseRepository{
     
-    getCustomerById(id:number): Promise<Customer|null>{
-        return Customer.findByPk(id, {nest:true})
+    async getCustomerById(id:number): Promise<Customer>{
+        const customer = await Customer.findByPk(id, {nest:true})
+
+        if (!customer){
+            throw new Error(`customer with id '${id}' not found`)
+        }
+        return customer
     }
 
     getCustomerVehicle(customerId:number, vehicleId:number): Promise<CustomerVehicle|null>{

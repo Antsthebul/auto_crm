@@ -27,7 +27,7 @@ export class TicketRepository extends BaseRepository{
     async getRepairOrderById(ticketId:number): Promise<TicketSchema>{
         let ro = await Ticket.findByPk(ticketId, {include:[{model:Job}]})
         if (!ro){
-            throw new Error("repair order not found")
+            throw new Error(`ticket with ${ticketId} not found`)
         }
          return this._convertRowToTicket(ro)
     }
@@ -36,11 +36,9 @@ export class TicketRepository extends BaseRepository{
         const filterArgs:{[k in keyof Partial<Ticket>]: any }= {state:type}
 
         if (startDate){
-            console.log("wack")
             filterArgs["createdAt"] = {[Op.gt]: startDate} 
         }
         if (endDate){
-            console.log("crack")
             filterArgs["completedAt"] = {[Op.lt]: endDate} 
 
         }

@@ -12,7 +12,6 @@
     "downgrade": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:migrate:undo && docker compose down",
     "seed": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:seed:all && docker compose down",
     "de-seed-all": "docker compose --profile live up -d && dotenvx run  -- npx sequelize-cli db:seed:undo && docker compose down"
-
   },
   "keywords": [],
   "author": "",
@@ -39,6 +38,7 @@
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "zod": "^3.24.1"
   }
 }

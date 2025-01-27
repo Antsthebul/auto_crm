@@ -1,35 +1,52 @@
 import { Customer } from "../database/models/customer_model";
 import { CustomerRespository } from "../domain/customer/customer_repository";
 import { CustomerCreateSchema, CustomerSchema } from "../domain/customer/customer_schema";
+import { ServiceReturnData } from "../types";
 
 export class CustomerService{
 
     constructor(public customerRepo: CustomerRespository){}
 
-    async createCustomer (data:CustomerCreateSchema): Promise<number>{
+    async createCustomer (data:CustomerCreateSchema): ServiceReturnData<number>{
+        let customer
         try{
-
-            const customer = await this.customerRepo.createCustomer(data)
-            return customer.id
+            customer = await this.customerRepo.createCustomer(data)
+            return [false, null, customer.id]
         }catch(err){
-            throw new Error("customer service failed to create customer. ", {cause: err})
+            return [true, "BAD_DATA",`customer service failed to create customer. ${err}`]
         }
     }
 
-    async getCustomer(customerId:number): Promise<Customer>{
-        let customer = await this.customerRepo.getCustomerById(customerId)
-        if (!customer){
-            throw new Error("Customer with not found")
+    async getCustomer(customerId:number): ServiceReturnData<Customer>{
+        let customer 
+        try{
+
+            customer = await this.customerRepo.getCustomerById(customerId)
+        }catch(err){
+            return [true, "BAD_DATA", err as string]
         }
-        return customer
+
+        return [false, null, customer]
     }
 
     //**Get All customers */
-    async getCustomers(): Promise<CustomerSchema[]>{
-        return await this.customerRepo.getCustomers()
+    async getCustomers(): ServiceReturnData<CustomerSchema[]>{
+        let customers
+        try{
+
+            customers = await this.customerRepo.getCustomers()
+            return [false, null, customers]
+        }catch(err){
+            return [true, "BAD_DATA", err as string]
+        }
     }
 
     async deleteCustomer(customerId:number){
-        await this.customerRepo.deleteCustomer(customerId)
+        try{
+
+            await this.customerRepo.deleteCustomer(customerId)
+        }catch(err){
+            console.error(`customerservice failed to delete customer '${customerId}'`)
+        }
     }
 }

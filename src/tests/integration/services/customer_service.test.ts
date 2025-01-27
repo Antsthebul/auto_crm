@@ -16,7 +16,8 @@ describe("customer service int tests", ()=>{
         }
 
         // ACT
-        let db_customer_id = await customerService.createCustomer(mock_customer)
+        const [hasErr, details, db_customer_id] = await customerService.createCustomer(mock_customer)
+        assert(!hasErr)
         let cus = await customerService.getCustomer(db_customer_id)
         
         // ASSERT
