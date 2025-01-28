@@ -32,6 +32,7 @@ export const intializeModels = (sequelize: Sequelize) => {
         model:  { type: DataTypes.STRING, allowNull: false },
         trim:  { type: DataTypes.STRING, allowNull: false },
         plate:   { type: DataTypes.STRING, allowNull: false },
+        mileage: {type: DataTypes.NUMBER, allowNull: false}
     }, { sequelize  })
 
     Ticket.init({

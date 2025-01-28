@@ -18,6 +18,7 @@ import { Model, CreationOptional, ForeignKey, InferAttributes,
     declare year: number
     declare make: string
     declare model: string
+    declare mileage: number
     declare trim?: CreationOptional<string>
     declare plate?: CreationOptional<string>
     declare customerId: ForeignKey<number>

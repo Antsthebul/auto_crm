@@ -46,6 +46,7 @@ export class CustomerRespository extends BaseRepository{
             trim: data.trim,
             plate: data.plate,
             customerId: data.customerId,
+            mileage: 0
         })
     }
 

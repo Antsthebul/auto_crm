@@ -47,7 +47,6 @@ export class TicketService{
     async getTickets(type:TicketState, startDate?:Date, endDate?:Date ): ServiceReturnData<TicketSchema[]>{
         let data
         try{
-
             data = await this.repairOrderRepo.getTickets(type)
         }catch(err){
             return [true, "BAD_DATA", err as string]
